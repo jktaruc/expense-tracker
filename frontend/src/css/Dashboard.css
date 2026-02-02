@@ -1,0 +1,75 @@
+/* Dashboard Container */
+.dashboard-container {
+    padding: 20px;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+/* Tab Navigation */
+.tab-container {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 30px;
+    border-bottom: 2px solid #e0e0e0;
+}
+
+.tab {
+    padding: 12px 24px;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 500;
+    border-bottom: 3px solid transparent;
+    transition: all 0.3s ease;
+    color: #666;
+}
+
+.tab:hover {
+    color: #667eea;
+    background-color: rgba(102, 126, 234, 0.05);
+}
+
+.tab.active {
+    border-bottom: 3px solid #667eea;
+    color: #667eea;
+    font-weight: 600;
+}
+
+/* Section Headers */
+.dashboard-container h1 {
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.dashboard-container h2 {
+    margin-top: 20px;
+    margin-bottom: 15px;
+    color: #555;
+    font-size: 1.3rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .dashboard-container {
+        padding: 15px;
+    }
+
+    .tab-container {
+        flex-wrap: wrap;
+    }
+
+    .tab {
+        flex: 1;
+        min-width: 150px;
+        text-align: center;
+    }
+
+    .dashboard-container h1 {
+        font-size: 1.5rem;
+    }
+
+    .dashboard-container h2 {
+        font-size: 1.1rem;
+    }
+}
