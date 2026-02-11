@@ -19,25 +19,3 @@ public class ExpenseSummaryDTO {
     private List<ExpenseItemDTO> topExpenses;
     private List<ExpenseItemDTO> recentExpenses;
 }
-
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
-class MonthlyExpenseDTO {
-    private String month;
-    private Double total;
-    private Integer count;
-}
-
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
-class ExpenseItemDTO {
-    private String id;
-    private String title;
-    private String category;
-    private Double amount;
-    private String date;
-}

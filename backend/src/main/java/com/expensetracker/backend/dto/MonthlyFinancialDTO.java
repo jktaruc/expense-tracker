@@ -9,8 +9,11 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class MonthlyExpenseDTO {
+public class MonthlyFinancialDTO {
     private String month;
-    private Double total;
-    private Integer count;
+    private Double totalExpenses;
+    private Double totalIncome;
+    private Double netBalance;
+    private Integer expenseCount;
+    private Integer incomeCount;
 }
