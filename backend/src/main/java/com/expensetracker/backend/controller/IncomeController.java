@@ -29,6 +29,21 @@ public class IncomeController {
         return repo.save(income);
     }
 
+    // ✅ NEW: Update income
+    @PutMapping("/{id}")
+    public ResponseEntity<Income> updateIncome(@PathVariable String id, @RequestBody Income income) {
+        return repo.findById(id)
+                .map(existingIncome -> {
+                    existingIncome.setTitle(income.getTitle());
+                    existingIncome.setCategory(income.getCategory());
+                    existingIncome.setAmount(income.getAmount());
+                    existingIncome.setDate(income.getDate());
+                    Income updated = repo.save(existingIncome);
+                    return ResponseEntity.ok(updated);
+                })
+                .orElse(ResponseEntity.notFound().build());
+    }
+
     @DeleteMapping("/{id}")
     public void deleteIncome(@PathVariable String id) {
         repo.deleteById(id);

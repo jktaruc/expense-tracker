@@ -34,28 +34,3 @@ public class FinancialSummaryDTO {
     private List<TransactionItemDTO> recentTransactions;
 }
 
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
-class MonthlyFinancialDTO {
-    private String month;
-    private Double totalExpenses;
-    private Double totalIncome;
-    private Double netBalance;
-    private Integer expenseCount;
-    private Integer incomeCount;
-}
-
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
-class TransactionItemDTO {
-    private String id;
-    private String title;
-    private String category;
-    private Double amount;
-    private String date;
-    private String type; // "INCOME" or "EXPENSE"
-}

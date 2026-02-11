@@ -1,4 +1,4 @@
-import '../styles/ExpensesList.css';
+import '../../styles/ExpensesList.css';
 
 function RecentTransactions({ transactions }) {
   const formatCurrency = (amount) => {

@@ -1,10 +1,9 @@
 import React, { useState } from "react";
 import api from "../api/api";
+import "../styles/AddExpense.css";
+import { getTodayDate } from "../utils/date-utils.js";
 
 export default function AddExpense({ onAdd }) {
-    const [description, setDescription] = useState("");
-    const [amount, setAmount] = useState("");
-    const today = new Date().toISOString().split("T")[0];
     const CATEGORIES = [
         "Food",
         "Transport",
@@ -13,10 +12,11 @@ export default function AddExpense({ onAdd }) {
         "Entertainment",
         "Other",
     ];
-    const [category, setCategory] = useState("Other");
-    const [date, setDate] = useState(() => {
-        const today = new Date();
-        return today.toISOString().split("T")[0]; // YYYY-MM-DD
+    const [expense, setExpense] = useState({
+        title: "",
+        category: CATEGORIES[0],
+        amount: "",
+        date: new Date().toISOString().split('T')[0]
     });
 
     const handleSubmit = async (e) => {
@@ -24,58 +24,77 @@ export default function AddExpense({ onAdd }) {
 
         try {
             await api.post("/expenses", {
-                title: description,
-                amount: parseFloat(amount),
-                category,
-                date, // YYYY-MM-DD
+                ...expense,
+                amount: parseFloat(expense.amount)
             });
 
-            setDescription("");
-            setAmount("");
-            setCategory("Other");
-
-            // reset date to today
-            setDate(new Date().toISOString().split("T")[0]);
+            setExpense({
+                title: "",
+                category: CATEGORIES[0],
+                amount: "",
+                date: getTodayDate()
+            });
 
             if (onAdd) onAdd();
         } catch (err) {
-            console.error(err);
-            alert("Failed to add expense");
+            console.error("Failed to add expense", err);
         }
     };
 
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setExpense(prev => ({ ...prev, [name]: value }));
+    };
+
     return (
-        <form onSubmit={handleSubmit} style={{ marginBottom: "20px" }}>
+        <form onSubmit={handleSubmit} className="add-expense-form">
             <select
-                value={category}
-                onChange={(e) => setCategory(e.target.value)}
+                name="category"
+                value={expense.category}
+                onChange={handleChange}
+                className="add-expense-input"
             >
                 {CATEGORIES.map(cat => (
-                    <option key={cat} value={cat}>
+                    <option value={cat}>
                         {cat}
                     </option>
                 ))}
             </select>
+
             <input
                 type="text"
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
+                name="title"
                 placeholder="Description"
+                value={expense.title}
+                onChange={handleChange}
                 required
+                className="add-expense-input"
             />
+
             <input
                 type="number"
-                value={amount}
-                onChange={(e) => setAmount(e.target.value)}
+                name="amount"
                 placeholder="Amount"
+                value={expense.amount}
+                onChange={handleChange}
+                step="0.01"
+                min="0"
                 required
+                className="add-expense-input"
             />
+
             <input
                 type="date"
-                value={date}
-                onChange={(e) => setDate(e.target.value)}
+                name="date"
+                value={expense.date}
+                onChange={handleChange}
+                required
+                className="add-expense-input"
             />
-            <button type="submit">Add Expense</button>
+
+            <button type="submit" className="add-expense-button">
+                Add Expense
+            </button>
         </form>
     );
 }
