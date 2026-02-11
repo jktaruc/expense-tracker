@@ -1,4 +1,4 @@
-import '../styles/StatsCards.css';
+import '../../styles/StatsCards.css';
 
 function FinancialStatsCards({ summary }) {
   const formatCurrency = (amount) => {

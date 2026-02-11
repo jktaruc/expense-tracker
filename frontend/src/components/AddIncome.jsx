@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import api from "../api/api";
+import "../styles/AddIncome.css";
+import { getTodayDate } from "../utils/date-utils.js";
 
 export default function AddIncome({ onAdd }) {
     const [income, setIncome] = useState({
@@ -11,22 +13,20 @@ export default function AddIncome({ onAdd }) {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        
+
         try {
             await api.post("/incomes", {
                 ...income,
                 amount: parseFloat(income.amount)
             });
-            
-            // Reset form
+
             setIncome({
                 title: "",
                 category: "Salary",
                 amount: "",
-                date: new Date().toISOString().split('T')[0]
+                date: getTodayDate()
             });
-            
-            // Trigger refresh in parent
+
             if (onAdd) onAdd();
         } catch (err) {
             console.error("Failed to add income", err);
@@ -39,12 +39,12 @@ export default function AddIncome({ onAdd }) {
     };
 
     return (
-        <form onSubmit={handleSubmit} style={styles.form}>
-            <select 
-                name="category" 
-                value={income.category} 
+        <form onSubmit={handleSubmit} className="add-income-form">
+            <select
+                name="category"
+                value={income.category}
                 onChange={handleChange}
-                style={styles.input}
+                className="add-income-input"
             >
                 <option value="Salary">Salary</option>
                 <option value="Freelance">Freelance</option>
@@ -61,7 +61,7 @@ export default function AddIncome({ onAdd }) {
                 value={income.title}
                 onChange={handleChange}
                 required
-                style={styles.input}
+                className="add-income-input"
             />
 
             <input
@@ -73,7 +73,7 @@ export default function AddIncome({ onAdd }) {
                 step="0.01"
                 min="0"
                 required
-                style={styles.input}
+                className="add-income-input"
             />
 
             <input
@@ -82,36 +82,12 @@ export default function AddIncome({ onAdd }) {
                 value={income.date}
                 onChange={handleChange}
                 required
-                style={styles.input}
+                className="add-income-input"
             />
 
-            <button type="submit" style={styles.button}>
+            <button type="submit" className="add-income-button">
                 Add Income
             </button>
         </form>
     );
 }
-
-const styles = {
-    form: {
-        display: "flex",
-        gap: "10px",
-        marginBottom: "20px",
-        flexWrap: "wrap"
-    },
-    input: {
-        padding: "8px 12px",
-        border: "1px solid #ddd",
-        borderRadius: "4px",
-        fontSize: "14px"
-    },
-    button: {
-        padding: "8px 20px",
-        backgroundColor: "#4caf50",
-        color: "white",
-        border: "none",
-        borderRadius: "4px",
-        cursor: "pointer",
-        fontWeight: "bold"
-    }
-};
